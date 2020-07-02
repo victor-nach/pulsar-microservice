@@ -1,0 +1,42 @@
+version: '3.5'
+
+services:
+  # Producer
+  destroyer:
+    image: destroyer:latest
+    container_name: destroyer
+    build:
+      context: .
+      dockerfile: src/destroyer-service/Dockerfile
+#    depends_on:
+#          - broker
+    environment:
+      - PULSAR_URL=pulsar://broker:6650
+      - SERVICE_NAME=destroyer
+      - TOPIC_NAME=targets.acquired
+
+  # Consumer
+  deathstar:
+    image: deathstar:latest
+    container_name: deathstar
+    build:
+      context: .
+      dockerfile: src/deathstar-service/Dockerfile
+    depends_on:
+          - broker
+    environment:
+      - PULSAR_URL=pulsar://broker:6650
+      - SERVICE_NAME=deathstar
+      - TOPIC_NAME=targets.acquired
+
+  # Event broker
+  broker:
+    image: apachepulsar/pulsar:2.4.0
+    container_name: broker
+    ports:
+      - '6650:6650'
+      - '8080:8080'
+    volumes:
+      - $PWD/data:/pulsar/data
+    command:
+      bin/pulsar standalone
