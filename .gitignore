@@ -13,3 +13,8 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+.idea/
+data/
+
+github.com/victor-nach/pulsar-microservice/src/deathstar-service
+github.com/victor-nach/pulsar-microservice/src/destroyer-service
