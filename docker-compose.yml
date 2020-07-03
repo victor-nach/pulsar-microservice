@@ -5,29 +5,36 @@ services:
   destroyer:
     image: destroyer:latest
     container_name: destroyer
+    restart: on-failure
     build:
       context: .
       dockerfile: src/destroyer-service/Dockerfile
-#    depends_on:
-#          - broker
+    depends_on:
+      - database
+      - broker
     environment:
       - PULSAR_URL=pulsar://broker:6650
       - SERVICE_NAME=destroyer
       - TOPIC_NAME=targets.acquired
+      - DB_URL=mongodb://database:27017
+      - DB_NAME=targets
 
   # Consumer
   deathstar:
     image: deathstar:latest
     container_name: deathstar
+    restart: on-failure
     build:
       context: .
       dockerfile: src/deathstar-service/Dockerfile
     depends_on:
-          - broker
+      - database
     environment:
       - PULSAR_URL=pulsar://broker:6650
       - SERVICE_NAME=deathstar
       - TOPIC_NAME=targets.acquired
+      - DB_URL=mongodb://database:27017
+      - DB_NAME=targets
 
   # Event broker
   broker:
@@ -37,6 +44,18 @@ services:
       - '6650:6650'
       - '8080:8080'
     volumes:
-      - $PWD/data:/pulsar/data
+      - $PWD/data/pulsar:/pulsar/data
     command:
       bin/pulsar standalone
+
+
+  # Database
+  database:
+    image: mongo
+    container_name: mongo
+    ports:
+      - '27017-27019:27017-27019'
+    volumes:
+      - $PWD/data/db:/data/db
+#    command:
+#      bin/pulsar standalone

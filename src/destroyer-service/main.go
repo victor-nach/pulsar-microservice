@@ -11,5 +11,4 @@ func main() {
 	if err := server.Run(); err != nil {
 		log.Fatalf("Error starting service : %v", err)
 	}
-
 }

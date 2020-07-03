@@ -1,12 +1,13 @@
 package server
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/apache/pulsar-client-go/pulsar"
-	"github.com/victor-nach/pulsar-microservice/src/destroyer-service/pb"
-	"github.com/victor-nach/pulsar-microservice/src/destroyer-service/server/db"
-	"github.com/victor-nach/pulsar-microservice/src/destroyer-service/server/handler"
-	"github.com/victor-nach/pulsar-microservice/src/destroyer-service/server/repo"
+	"github.com/victor-nach/pulsar-microservice/src/deathstar-service/pb"
+	"github.com/victor-nach/pulsar-microservice/src/deathstar-service/server/db"
+	"github.com/victor-nach/pulsar-microservice/src/deathstar-service/server/handler"
+	"github.com/victor-nach/pulsar-microservice/src/deathstar-service/server/repo"
 	"google.golang.org/grpc"
 	"log"
 	"net"
@@ -21,7 +22,7 @@ func Run() error {
 		log.Fatal(err)
 	}
 	r := repo.Repository{Collection: c}
-	producer, err := getProducer()
+	comsumer, err := getComsumer()
 	if err != nil {
 		log.Printf("Failed to connect to broker : %v", err)
 		return err
@@ -34,7 +35,7 @@ func Run() error {
 		log.Printf("Failed to listen : %v", err)
 		return err
 	}
-	fmt.Println("Serving destroyer service...")
+	fmt.Println("Serving deathstar service...")
 	if err := s.Serve(lis); err != nil {
 		log.Printf("failed to serve: %v\n", err)
 		return err
@@ -42,9 +43,8 @@ func Run() error {
 	return nil
 }
 
-// getProducer - create a pulsar producer
-func getProducer() (pulsar.Producer, error) {
-	// create a new pulsar client
+// getComsumer - create a pulsar consumer
+func getComsumer() error {
 	url, ok := os.LookupEnv("PULSAR_URL")
 	if !ok {
 		url = "pulsar://localhost:6650"
@@ -61,20 +61,24 @@ func getProducer() (pulsar.Producer, error) {
 		return nil, err
 	}
 
-
 	// create a new producer instance
 	serviceName, ok := os.LookupEnv("SERVICE_NAME")
 	if !ok {
-		serviceName = "destroyer"
+		serviceName = "deathstar"
 	}
 	topic, ok := os.LookupEnv("TOPIC_NAME")
 	if !ok {
 		topic = "targets.acquired"
 	}
-	producer, err := client.CreateProducer(pulsar.ProducerOptions{
-		Topic: topic,
-		Name:  serviceName,
+	consumer, err := client.Subscribe(pulsar.ConsumerOptions{
+		Topic:            topic,
+		SubscriptionName: serviceName,
+		Type:             pulsar.Shared,
 	})
-	log.Println("Producer is ready")
-	return producer, nil
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer consumer.Close()
+
+
 }

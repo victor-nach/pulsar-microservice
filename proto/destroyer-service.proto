@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package destroyerService;
+
+option go_package = "/pb";
+
+service DestroyerService {
+  rpc AcquireTargets(Targets) returns (Response) {}
+}
+
+message Targets {
+  repeated Target data = 1;
+}
+
+message Target {
+  string id = 1;
+  string message = 2;
+  string created_on = 3;
+}
+
+message Response {
+  string messageId = 1;
+}
