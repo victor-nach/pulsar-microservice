@@ -3,6 +3,7 @@ package db
 import (
 	"context"
 	"fmt"
+	//"log"
 	"os"
 
 	"go.mongodb.org/mongo-driver/mongo"
@@ -29,7 +30,6 @@ func Connect() (*mongo.Collection, error) {
 		dbURL = "mongodb://localhost:27017"
 		dbName = "targets"
 	}
-
 	clientOptions := options.Client().ApplyURI(dbURL)
 	client, err := mongo.Connect(context.TODO(), clientOptions)
 	if err != nil {
