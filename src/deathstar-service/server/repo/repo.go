@@ -18,7 +18,6 @@ type Repository struct {
 
 type RepoInterface interface {
 	SaveTarget(message pulsar.Message) error
-	//GetAll(ctx context.Context) ([]*Consignment, error)
 }
 
 func (r *Repository) SaveTarget (msg pulsar.Message) {
