@@ -19,10 +19,10 @@ RUN go mod download
 COPY proto/destroyer-service.proto .
 
 # 7. Install depenedecies for generating proto
-#RUN  generate proto-file into proper directory
+#RUN  sudo apt install protobuf-compiler
 
 # 8. Generate go package from the proto file
-#RUN  generate proto-file into proper directory
+#RUN  protoc proto/destroyer-service.proto --go_out=plugins=grpc:src/destroyer-service
 
 # 9. Copy the source to the working directory in the container
 COPY src/destroyer-service/. .

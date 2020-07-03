@@ -16,5 +16,4 @@
 .idea/
 data/
 
-github.com/victor-nach/pulsar-microservice/src/deathstar-service
-github.com/victor-nach/pulsar-microservice/src/destroyer-service
+*.pb.go
