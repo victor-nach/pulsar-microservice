@@ -1,0 +1,24 @@
+version: '3.5'
+
+services:
+  # Event broker
+  broker:
+    image: apachepulsar/pulsar:2.4.0
+    container_name: broker
+    ports:
+      - '6650:6650'
+      - '8080:8080'
+    volumes:
+      - $PWD/data/pulsar:/pulsar/data
+    command:
+      bin/pulsar standalone
+
+
+  # Database
+  database:
+    image: mongo
+    container_name: mongo
+    ports:
+      - '27017-27019:27017-27019'
+    volumes:
+      - $PWD/data/db:/data/db
