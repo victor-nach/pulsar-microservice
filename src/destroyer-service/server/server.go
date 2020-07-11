@@ -26,7 +26,7 @@ func Run() error {
 		log.Printf("Failed to connect to broker : %v", err)
 		return err
 	}
-	h := handler.Handler{r, producer}
+	h := handler.Handler{&r, producer}
 	s := grpc.NewServer()
 	pb.RegisterDestroyerServiceServer(s, &h)
 	lis, err := net.Listen("tcp", "0.0.0.0:50051")
