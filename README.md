@@ -7,9 +7,15 @@ A simple micro-service application that communicate through a pub-sub messaging 
 ## How to run
 
 ### Locally
-Clone project
+- Clone this project
+- run `make start` to build docker images and start services
 
-run `make start` to build docker images and start services
+## Run services seperately
+ALternatively you can run the services seperately by
+- first running the dependencies (mongo & pulsar) `make run-dep`
+- running the deathstar service independently `make run-deathstar`
+- running the destroyer service independently `make run-destroyer`
+
 
 ### Project Management
 The pivotal tracker board for the project can be found here - https://www.pivotaltracker.com/n/projects/2455810

@@ -4,8 +4,8 @@ package destroyerService;
 
 option go_package = "/pb";
 
-service DestroyerService {
-  rpc AcquireTargets(Targets) returns (Response) {}
+service DeathstarService {
+  // rpc AcquireTargets(Targets) returns (Response) {}
 }
 
 message Targets {
