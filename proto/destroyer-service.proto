@@ -6,6 +6,7 @@ option go_package = "/pb";
 
 service DestroyerService {
   rpc AcquireTargets(Targets) returns (Response) {}
+  rpc ListTargets(Request) returns (Targets) {}
 }
 
 message Targets {
@@ -21,3 +22,5 @@ message Target {
 message Response {
   string messageId = 1;
 }
+
+message Request {}
