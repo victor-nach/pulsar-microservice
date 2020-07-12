@@ -15,5 +15,6 @@
 # vendor/
 .idea/
 data/
+*.DS_Store
 
 *.pb.go
