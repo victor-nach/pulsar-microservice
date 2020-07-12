@@ -20,3 +20,11 @@ run-deathstar: gen-proto
 # To start up the dependencies independently (mongodb, Apache pulsar)
 run-dep:
 	docker-compose -f docker-compose.dep.yml up
+
+# To run up the api gateway client
+run-api:
+	cd src/api-gateway && go run main.go
+
+# To run up the api gateway client in a dockerised environment
+start-api:
+	cd src/api-gateway && docker-compose up --remove-orphans

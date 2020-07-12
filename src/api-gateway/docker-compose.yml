@@ -1,0 +1,13 @@
+version: '3.5'
+
+services:
+  # API Gateway
+  api-gateway:
+    image: api-gateway:latest
+    container_name: api-gateway
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - PORT=8000
