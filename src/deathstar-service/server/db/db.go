@@ -3,7 +3,6 @@ package db
 import (
 	"context"
 	"fmt"
-	//"log"
 	"os"
 
 	"go.mongodb.org/mongo-driver/mongo"
