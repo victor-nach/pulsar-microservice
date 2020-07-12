@@ -28,7 +28,7 @@ func Connect() (*mongo.Collection, error) {
 
 	if !URLOk || !nameOk {
 		dbURL = "mongodb://localhost:27017"
-		dbName = "targets"
+		dbName = "roava"
 	}
 	clientOptions := options.Client().ApplyURI(dbURL)
 	client, err := mongo.Connect(context.TODO(), clientOptions)
@@ -39,6 +39,6 @@ func Connect() (*mongo.Collection, error) {
 		return nil, err
 	}
 	fmt.Println("Connected to the db...")
-	collection := client.Database(dbName).Collection("users")
+	collection := client.Database(dbName).Collection("targets")
 	return collection, nil
 }

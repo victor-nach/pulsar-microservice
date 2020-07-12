@@ -32,7 +32,7 @@ func Run() error {
 	go EventService.Run()
 	s := grpc.NewServer()
 	pb.RegisterDeathstarServiceServer(s, &h)
-	lis, err := net.Listen("tcp", "0.0.0.0:50051")
+	lis, err := net.Listen("tcp", "0.0.0.0:50052")
 	if err != nil {
 		log.Printf("Failed to listen : %v", err)
 		return err

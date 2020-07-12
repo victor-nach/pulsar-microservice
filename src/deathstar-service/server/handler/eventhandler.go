@@ -11,14 +11,16 @@ import (
 	"github.com/victor-nach/pulsar-microservice/src/deathstar-service/server/repo"
 )
 
+// EventService - event service struct
 type EventService struct {
 	Consumer pulsar.Consumer
 	Repo     repo.RepoInterface
 }
 
+// Run - listen for events from the broker
 func (e *EventService) Run() {
 	log.Println("Listeneing for events")
-	for i := 0; i < 10; i++ {
+	for {
 		msg, err := e.Consumer.Receive(context.Background())
 		if err != nil {
 			log.Fatal(err)
@@ -32,5 +34,7 @@ func (e *EventService) Run() {
 			return
 		}
 		// Acknowledge message
+		e.Consumer.AckID(msg.ID())
+		fmt.Println("Message acknowledged.")
 	}
 }
