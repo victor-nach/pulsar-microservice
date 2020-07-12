@@ -9,6 +9,9 @@ A simple micro-service application that communicate through a pub-sub messaging 
 ### Locally
 - Clone this project
 - run `make start` to build docker images and start all the services
+- The api gateway starts on port `8000`
+- To test the endpoints exposed by the gateway, you can use the documentation below
+- https://documenter.getpostman.com/view/6414812/T17NZjQ7
 
 ## Run services seperately
 ALternatively you can run the services seperately by

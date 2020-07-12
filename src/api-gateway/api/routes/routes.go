@@ -14,5 +14,6 @@ func Router() *gin.Engine {
 	router := gin.New()
 	router.GET("/", handler.HomePage)
 	router.POST("/acquire-targets", handler.AcquireTargets)
+	router.GET("/list-targets", handler.ListTargets)
 	return router
 }
