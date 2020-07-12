@@ -2,12 +2,17 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
-	c "github.com/victor-nach/pulsar-microservice/src/api-gateway/api/handlers"
+	"github.com/victor-nach/pulsar-microservice/src/api-gateway/api/client"
+	"github.com/victor-nach/pulsar-microservice/src/api-gateway/api/handlers"
 )
 
 // Router - returns a gin router
 func Router() *gin.Engine {
+	// create grpc client
+	client := client.Cli
+	handler := &handlers.Handler{Client: client}
 	router := gin.New()
-	router.GET("/", c.HomePage)
+	router.GET("/", handler.HomePage)
+	router.POST("/acquire-targets", handler.AcquireTargets)
 	return router
 }

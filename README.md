@@ -8,13 +8,14 @@ A simple micro-service application that communicate through a pub-sub messaging 
 
 ### Locally
 - Clone this project
-- run `make start` to build docker images and start services
+- run `make start` to build docker images and start all the services
 
 ## Run services seperately
 ALternatively you can run the services seperately by
 - first running the dependencies (mongo & pulsar) `make run-dep`
 - running the deathstar service independently `make run-deathstar`
 - running the destroyer service independently `make run-destroyer`
+- running the api gateway service independently `make run-api`
 
 
 ### Project Management

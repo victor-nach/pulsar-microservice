@@ -29,11 +29,16 @@ func Run() error {
 	h := handler.Handler{&r, producer}
 	s := grpc.NewServer()
 	pb.RegisterDestroyerServiceServer(s, &h)
-	lis, err := net.Listen("tcp", "0.0.0.0:50051")
+	port, ok := os.LookupEnv("PORT")
+	if !ok {
+		port = "5051"
+	}
+	lis, err := net.Listen("tcp", ":" + port)
 	if err != nil {
 		log.Printf("Failed to listen : %v", err)
 		return err
 	}
+	fmt.Println(lis.Addr())
 	fmt.Println("Serving destroyer service...")
 	if err := s.Serve(lis); err != nil {
 		log.Printf("failed to serve: %v\n", err)

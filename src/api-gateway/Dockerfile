@@ -10,13 +10,13 @@ LABEL maintainer="Iheanacho Victor nonso"
 WORKDIR /app
 
 # 4. Copy go mod and sum files into the working directory
-COPY go.mod go.sum ./
+COPY src/api-gateway/go.mod src/api-gateway/go.sum ./
 
 # 5. Download dependencies.
 RUN go mod download
 
 # 6. Copy the source to the working directory in the container
-COPY . .
+COPY src/api-gateway/. .
 
 # 7. Build the Go app
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o bin .

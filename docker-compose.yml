@@ -12,7 +12,10 @@ services:
     depends_on:
       - database
       - broker
+    ports:
+      - '5051:5051'
     environment:
+      - PORT=5051
       - PULSAR_URL=pulsar://broker:6650
       - SERVICE_NAME=destroyer
       - TOPIC_NAME=targets.acquired
@@ -36,6 +39,20 @@ services:
       - DB_URL=mongodb://database:27017
       - DB_NAME=targets
 
+  # API Gateway
+  api-gateway:
+    image: api-gateway:latest
+    container_name: api
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: src/api-gateway/Dockerfile
+    ports:
+      - '8000:8000'
+    environment:
+      - PORT=8000
+      - DESTROYER_URL=destroyer:5051
+
   # Event broker
   broker:
     image: apachepulsar/pulsar:2.4.0
@@ -57,5 +74,3 @@ services:
       - '27017-27019:27017-27019'
     volumes:
       - $PWD/data/db:/data/db
-#    command:
-#      bin/pulsar standalone
